@@ -1,5 +1,6 @@
-from planificacion.algoritmos.fcfs import algoritmo_fcfs 
+from planificacion.algoritmos.First_come_first_served import algoritmo_fcfs 
 from planificacion.algoritmos.Round_robin import algoritmo_round_robin 
+from planificacion.algoritmos.Shortest_job_first import algoritmo_sjf 
 
 def seleccion_algoritmo_planificacion(lista):
     while True:
@@ -14,12 +15,12 @@ def seleccion_algoritmo_planificacion(lista):
         print("-" * 55)
         
         opcion_alg = input("Elige el algoritmo a ejecutar (1-5): ")
-        
+        #distintas opciones de algoritmos
         match opcion_alg:
             case "1":
                 return algoritmo_fcfs(lista)
             case "2":
-                break
+                return algoritmo_sjf(lista)
             case "3":
                 break
             case "4":

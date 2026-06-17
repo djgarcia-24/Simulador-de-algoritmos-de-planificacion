@@ -1,3 +1,17 @@
+def ordenar_lista(lista):
+  #retorna la lista de procesos ordenada en base a su tiempo de rafaga, de menor a mayor
+  n= len(lista)
+  for i in range(n):
+    swap = False
+    for j in range(0, n - i - 1):
+      if lista[j].llegada > lista[j + 1].llegada:
+        lista[j], lista[j + 1] = lista[j + 1], lista[j]
+        swap = True
+
+    if not swap:
+      break
+  return lista
+
 def scheduler( lista, bool_RR, quantum): 
 
 
@@ -60,6 +74,8 @@ def scheduler( lista, bool_RR, quantum):
                 proceso.Tretorno= proceso.fin -proceso.llegada
                 proceso.Tespera= proceso.inicio -proceso.llegada
 
+
+    lista= ordenar_lista(lista)
 
     for proceso in lista:
         print( f"ID: {proceso.id} | Llegada: {proceso.llegada} | Ráfaga: {proceso.rafaga} | Prioridad: {proceso.prioridad} | Inicio: {proceso.inicio} | Fin: {proceso.fin} | Retorno: {proceso.Tretorno} | Espera: {proceso.Tespera}")
