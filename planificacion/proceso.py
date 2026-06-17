@@ -4,6 +4,7 @@ class Proceso:
         self.llegada = llegada
         self.rafaga = rafaga
         self.prioridad = prioridad
+        self.Trestante = rafaga
         self.inicio = None
         self.fin = None
         self.Tretorno= None

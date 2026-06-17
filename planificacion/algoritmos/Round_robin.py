@@ -1,5 +1,5 @@
-def algoritmo_fcfs(lista):
-  #retorna la lista de procesos ordenada en base a su tiempo de llegada, de menor a mayor
+def algoritmo_round_robin(lista):
+    #retorna la lista de procesos ordenada solo
   n= len(lista)
   for i in range(n):
     swap = False

@@ -14,6 +14,16 @@ from core.scheduler import scheduler
 from menu_algoritmo import seleccion_algoritmo_planificacion
 from menu_lista import seleccion_lista
 
+#se selecciona la lista 
 lista = seleccion_lista()
-lista = seleccion_algoritmo_planificacion(lista)
-scheduler(lista, 0)
+#la lista es organizada segun el algorimto de planificacion escogido y se le asigna a la variable planificacion
+planificacion = seleccion_algoritmo_planificacion(lista)
+
+#si algoritmo escogido es RR este devolvera una tupla, que se desempacara en la lista ordenada y el quantum
+if isinstance( planificacion , tuple):
+    lista,quantum = planificacion
+    scheduler(lista, 1, quantum)
+else:
+    lista =planificacion
+    scheduler(lista, 0, 0)
+

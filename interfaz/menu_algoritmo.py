@@ -1,4 +1,5 @@
 from planificacion.algoritmos.fcfs import algoritmo_fcfs 
+from planificacion.algoritmos.Round_robin import algoritmo_round_robin 
 
 def seleccion_algoritmo_planificacion(lista):
     while True:
@@ -17,18 +18,15 @@ def seleccion_algoritmo_planificacion(lista):
         match opcion_alg:
             case "1":
                 return algoritmo_fcfs(lista)
-                break
             case "2":
                 break
             case "3":
                 break
             case "4":
-
-                quantum = input("\n[?] Ingresa el valor del Quantum para Round Robin: ")
+                quantum = input("Ingresa el valor del Quantum para Round Robin: ")
                 if quantum.isdigit():
                     quantum = int(quantum)
-                    
-                    break
+                    return algoritmo_round_robin(lista), quantum
                 else:
                     print("\n[!] Error: El Quantum debe ser un número entero válido.")
             case "5":
