@@ -1,13 +1,12 @@
 import sys
-import os
+from pathlib import Path
 
 #evita que se creen nuevas carpetas al correr el programa
 sys.dont_write_bytecode = True
  
 #se guarda la ruta actual proyecto para poder hacer los imports
-ruta_actual = os.path.dirname(os.path.abspath(__file__))
-ruta_padre = os.path.dirname(ruta_actual)
-sys.path.append(ruta_padre)
+ruta_padre = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, ruta_padre)
 
 #imports
 from core.scheduler import scheduler

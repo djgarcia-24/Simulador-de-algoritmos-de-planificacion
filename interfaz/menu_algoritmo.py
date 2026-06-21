@@ -20,7 +20,7 @@ def seleccion_algoritmo_planificacion(lista):
             case "1":
                 return algoritmo_fcfs(lista)
             case "2":
-                return algoritmo_sjf(lista)
+                return 
             case "3":
                 break
             case "4":
