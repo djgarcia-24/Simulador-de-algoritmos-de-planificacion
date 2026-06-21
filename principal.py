@@ -10,8 +10,8 @@ sys.path.insert(0, ruta_padre)
 
 #imports
 from core.scheduler import scheduler
-from menu_algoritmo import seleccion_algoritmo_planificacion
-from menu_lista import seleccion_lista
+from interfaz.menu_algoritmo import seleccion_algoritmo_planificacion
+from interfaz.menu_lista import seleccion_lista
 
 #se selecciona la lista 
 lista = seleccion_lista()
