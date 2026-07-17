@@ -1,6 +1,8 @@
 from planificacion.algoritmos.First_come_first_served import algoritmo_fcfs 
 from planificacion.algoritmos.Round_robin import algoritmo_round_robin 
 from planificacion.algoritmos.Shortest_job_first import algoritmo_sjf 
+from planificacion.algoritmos.Prioridad import algoritmo_prioridad 
+
 
 def seleccion_algoritmo_planificacion(lista):
     while True:
@@ -22,7 +24,7 @@ def seleccion_algoritmo_planificacion(lista):
             case "2":
                 return algoritmo_sjf(lista)                
             case "3":
-                return 
+                return algoritmo_prioridad(lista)
                 break
             case "4":
                 quantum = input("Ingresa el valor del Quantum para Round Robin: ")

@@ -51,8 +51,7 @@ def scheduler( lista, tipo, quantum):
             candidatos = [p for p in pendientes if p.llegada <= t]
             
             if candidatos:
-                # Si hay candidatos, aplicamos SJF: ordenamos por la ráfaga más corta.
-                # En caso de empate en ráfaga, desempatamos por el que llegó primero.
+
                 candidatos.sort(key=lambda p: (p.rafaga, p.llegada))
 
                 #el primero de la lista que ya ordenamos en base a llegada y rafaga es el primer candidato
@@ -76,6 +75,42 @@ def scheduler( lista, tipo, quantum):
                 
         # al final del while terminados tendra todos los procesos listos 
         lista = terminados
+
+    elif(tipo == 3):
+
+        t = 0
+        pendientes = lista.copy() # pendientes sera igual a la lista original
+        terminados = []      
+
+        #mientras existan pendientes el loop sigue
+        while pendientes:
+            # candidatos es igual a todos los procesos con llegada menor o igual a t
+
+
+            candidatos = [p for p in pendientes if p.llegada <= t]
+            
+            if candidatos:
+                candidatos.sort(key=lambda p: (p.rafaga, p.prioridad), reverse=True)
+                #el primero de la lista que ya ordenamos en base a llegada y rafaga es el primer candidato
+                actual = candidatos[0]
+ 
+                actual.inicio = t
+                actual.fin = actual.inicio + actual.rafaga
+                actual.Tretorno = actual.fin - actual.llegada
+                actual.Tespera = actual.inicio - actual.llegada
+
+                t = t+ actual.rafaga
+
+                pendientes.remove(actual)
+                terminados.append(actual) 
+            else:
+                # Si no hay candidatos, significa que en tiempo t no ha llegado nadie 
+                #adelantaremos t a la proxima llegada
+                t = pendientes[0].llegada
+                
+        # al final del while terminados tendra todos los procesos listos 
+        lista = terminados
+
     #procesamiento de lista con algoritmo RR
     elif(tipo  == 4):
         round=1
@@ -111,8 +146,6 @@ def scheduler( lista, tipo, quantum):
                     tiempo_total = (quantum)+tiempo_total
 
             round =round+1       
-
-
 
     lista= ordenar_lista(lista)
 

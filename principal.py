@@ -22,9 +22,12 @@ planificacion = seleccion_algoritmo_planificacion(lista)
 
 # la variable tipo de algoritmo tendra 4 posibles codigos indentificando a cada algoritmo
 # 1 fcfs, 2 sjf, 3 prioridad, 4 RR,
+
+
 if(len(planificacion)==2 ):
     lista, tipo_de_algoritmo = planificacion  
     scheduler(lista, tipo_de_algoritmo, 0)
+
 elif ( len(planificacion) == 3):
     lista, tipo_de_algoritmo, quantum = planificacion
     scheduler(lista, tipo_de_algoritmo, quantum)
