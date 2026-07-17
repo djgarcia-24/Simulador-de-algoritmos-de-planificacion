@@ -1,3 +1,7 @@
+from planificacion.algoritmo import Algoritmo
+
+
+
 
 def ordenar_lista(lista):
   #retorna la lista de procesos ordenada en base a su tiempo de llegada, de menor a mayor
@@ -12,6 +16,67 @@ def ordenar_lista(lista):
     if not swap:
       break
   return lista
+
+
+def imprimir_lista(lista):
+    lista= ordenar_lista(lista)
+
+    for proceso in lista:
+       print( f"ID: {proceso.id} | Llegada: {proceso.llegada} | Ráfaga: {proceso.rafaga} | Prioridad: {proceso.prioridad} | Inicio: {proceso.inicio} | Fin: {proceso.fin} | Retorno: {proceso.Tretorno} | Espera: {proceso.Tespera}")
+
+
+
+
+
+#calculo de idle_time, TER y TRP 
+def desempeno_algoritmo(lista, tipo ):
+
+    #primero haremos el calculo del idle 
+    #el idle de RR es un caso especial asi que lo manejamos aparte
+    if(tipo ==4):
+        print(4) 
+    else:    
+        #aqui manejaremos los idles de fcfs, sjf y prioridad
+        #ordenamos la lista cronologicamente segun los inicios 
+        lista_temporal = sorted(lista, key=lambda p: p.inicio)
+
+        idle = 0
+        t = 0  # Empezamos en el tiempo 0 y tiempo idle 0
+
+        for p in lista_temporal:
+            #si un proceso inicia despues de que termina el otro (si su tiempo inicio es mayor a su tiempo fin)
+            if p.inicio > t:
+
+                #se guarda la diferencia entre fin de uno e inicio del otro
+                espacio_idle = p.inicio - t
+                #y se suma al tiempo idle total
+                idle += espacio_idle
+
+            #ahora tiempo pasa a ser el tiempo fin del proceso que acabamos de evaluar, en base a este nuevo tiempo fin calcularemos la diferencia con el siguiente
+            # y asi sucesivamente hasta tener un total de todos los procesos 
+            t = p.fin
+
+    #ahora el calculo de los tiempos promedios
+    Tiempo_de_espera_promedio =0
+    Tiempo_de_respuesta_promedio =0
+
+    for proceso in lista:
+        Tiempo_de_espera_promedio= proceso.Tespera +Tiempo_de_espera_promedio
+        Tiempo_de_respuesta_promedio = proceso.Tretorno +Tiempo_de_respuesta_promedio
+
+    Tiempo_de_espera_promedio = Tiempo_de_espera_promedio/ len(lista)
+    Tiempo_de_respuesta_promedio = Tiempo_de_respuesta_promedio / len(lista)
+
+    datos_algoritmo = Algoritmo(idle, Tiempo_de_espera_promedio, Tiempo_de_respuesta_promedio)
+
+    return datos_algoritmo
+
+
+    
+
+
+
+
 
 
 
@@ -91,7 +156,7 @@ def scheduler( lista, tipo, quantum):
             
             if candidatos:
                 candidatos.sort(key=lambda p: (p.rafaga, p.prioridad), reverse=True)
-                #el primero de la lista que ya ordenamos en base a llegada y rafaga es el primer candidato
+                #el primero de la lista que ya ordenamos en base a llegada y prioridad es el primer candidato
                 actual = candidatos[0]
  
                 actual.inicio = t
@@ -113,6 +178,8 @@ def scheduler( lista, tipo, quantum):
 
     #procesamiento de lista con algoritmo RR
     elif(tipo  == 4):
+
+
         round=1
         terminado = False        
         
@@ -145,13 +212,15 @@ def scheduler( lista, tipo, quantum):
                                         
                     tiempo_total = (quantum)+tiempo_total
 
-            round =round+1       
-
-    lista= ordenar_lista(lista)
-
-    for proceso in lista:
-       print( f"ID: {proceso.id} | Llegada: {proceso.llegada} | Ráfaga: {proceso.rafaga} | Prioridad: {proceso.prioridad} | Inicio: {proceso.inicio} | Fin: {proceso.fin} | Retorno: {proceso.Tretorno} | Espera: {proceso.Tespera}")
+            round =round+1
 
 
 
-   
+    imprimir_lista(lista)
+
+
+
+
+    print(     "\nIdle : "+  str(desempeno_algoritmo(lista, tipo).idle  )  
+          +"\nTER: "+   str(desempeno_algoritmo(lista, tipo).Tiempo_de_espera_promedio  ) 
+          + "\nTRP: "  +str(desempeno_algoritmo(lista, tipo).Tiempo_de_respuesta_promedio ))
