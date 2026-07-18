@@ -1,4 +1,5 @@
 from planificacion.proceso import Proceso
+import sys
 
 def seleccion_lista():
     while True:
@@ -30,6 +31,8 @@ def seleccion_lista():
                 print("\n[+] Cargando procesos...")
                 break
             case "6":
+                sys.exit()  # Stops the program immediately
+
                 break
             case _:
                 print("\n[!] Opción inválida.")

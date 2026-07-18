@@ -18,15 +18,32 @@ def ordenar_lista(lista):
   return lista
 
 
-def imprimir_lista(lista):
+def imprimir_lista(lista, tipo):
     lista= ordenar_lista(lista)
+
+
+    match tipo:
+        case 1:
+            print("\nFCFS (First-Come, First-Served):")
+        case 2:
+            print("\nSJF (Shortest Job First):")
+        case 3:
+            print("\nPrioridad:")
+        case 4:
+            print("\nRound Robin:")
 
     for proceso in lista:
        print( f"ID: {proceso.id} | Llegada: {proceso.llegada} | Ráfaga: {proceso.rafaga} | Prioridad: {proceso.prioridad} | Inicio: {proceso.inicio} | Fin: {proceso.fin} | Retorno: {proceso.Tretorno} | Espera: {proceso.Tespera}")
 
 
 
+def imprimir_detalles_algoritmo(datos_alg):
 
+    print(    "\nTipo: " + str(datos_alg.tipo_de_algoritmo)+
+           "\nIdle : "+  str(datos_alg.idle  )  
+          +"\nTER: "+   str(datos_alg.Tiempo_de_espera_promedio  ) 
+          + "\nTRP: "  +str(datos_alg.Tiempo_de_respuesta_promedio) +"\n")
+    
 
 #calculo de idle_time, TER y TRP 
 def desempeno_algoritmo(lista, tipo, quantum ):
@@ -75,7 +92,22 @@ def desempeno_algoritmo(lista, tipo, quantum ):
     Tiempo_de_espera_promedio = Tiempo_de_espera_promedio/ len(lista)
     Tiempo_de_respuesta_promedio = Tiempo_de_respuesta_promedio / len(lista)
 
+
+
+
     datos_algoritmo = Algoritmo(idle, Tiempo_de_espera_promedio, Tiempo_de_respuesta_promedio)
+
+
+    
+    match tipo:
+        case 1:
+            datos_algoritmo.tipo_de_algoritmo=("FCFS")
+        case 2:
+            datos_algoritmo.tipo_de_algoritmo=("SJF")
+        case 3:
+            datos_algoritmo.tipo_de_algoritmo=("PRIORIDAD")
+        case 4:
+            datos_algoritmo.tipo_de_algoritmo=("RR")
 
     return datos_algoritmo
 
@@ -227,15 +259,9 @@ def scheduler( lista, tipo, quantum):
 
 
 
-    imprimir_lista(lista)
+    imprimir_lista(lista, tipo)
 
     datos_alg = desempeno_algoritmo(lista, tipo, quantum)
 
 
-
-
-
-
-    print(     "\nIdle : "+  str(datos_alg.idle  )  
-          +"\nTER: "+   str(datos_alg.Tiempo_de_espera_promedio  ) 
-          + "\nTRP: "  +str(datos_alg.Tiempo_de_respuesta_promedio ))
+    return datos_alg
