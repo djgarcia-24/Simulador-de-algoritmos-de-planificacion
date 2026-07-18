@@ -29,12 +29,20 @@ def imprimir_lista(lista):
 
 
 #calculo de idle_time, TER y TRP 
-def desempeno_algoritmo(lista, tipo ):
+def desempeno_algoritmo(lista, tipo, quantum ):
 
     #primero haremos el calculo del idle 
     #el idle de RR es un caso especial asi que lo manejamos aparte
     if(tipo ==4):
-        print(4) 
+        #si el burst time no es divisible por el quantum,      q- el restante , sera el tiempo idle
+
+
+        idle = 0
+        for p in lista:
+            restante = p.rafaga % quantum
+            if restante != 0:
+                idle += (quantum - restante)    
+
     else:    
         #aqui manejaremos los idles de fcfs, sjf y prioridad
         #ordenamos la lista cronologicamente segun los inicios 
@@ -155,7 +163,10 @@ def scheduler( lista, tipo, quantum):
             candidatos = [p for p in pendientes if p.llegada <= t]
             
             if candidatos:
-                candidatos.sort(key=lambda p: (p.rafaga, p.prioridad), reverse=True)
+
+                #ordenando por -prioridad permite que las mayorores prioridades queden primero 
+                candidatos.sort(key=lambda p: (-p.prioridad, p.llegada))
+
                 #el primero de la lista que ya ordenamos en base a llegada y prioridad es el primer candidato
                 actual = candidatos[0]
  
@@ -171,7 +182,7 @@ def scheduler( lista, tipo, quantum):
             else:
                 # Si no hay candidatos, significa que en tiempo t no ha llegado nadie 
                 #adelantaremos t a la proxima llegada
-                t = pendientes[0].llegada
+                t = min(p.llegada for p in pendientes)
                 
         # al final del while terminados tendra todos los procesos listos 
         lista = terminados
@@ -203,8 +214,8 @@ def scheduler( lista, tipo, quantum):
                         #proceso.fin = (round-1)*quantum+proceso.Trestante+tiempo_total
                         
                         proceso.fin = ((tiempo_total))+proceso.Trestante
-                        proceso.Tretorno= proceso.fin -proceso.llegada
-                        proceso.Tespera= proceso.inicio -proceso.llegada
+                        proceso.Tretorno= abs(  proceso.fin -proceso.llegada)
+                        proceso.Tespera= abs(proceso.inicio -proceso.llegada  )
                         proceso.Trestante =0 
                         
                     else:
@@ -218,9 +229,13 @@ def scheduler( lista, tipo, quantum):
 
     imprimir_lista(lista)
 
+    datos_alg = desempeno_algoritmo(lista, tipo, quantum)
 
 
 
-    print(     "\nIdle : "+  str(desempeno_algoritmo(lista, tipo).idle  )  
-          +"\nTER: "+   str(desempeno_algoritmo(lista, tipo).Tiempo_de_espera_promedio  ) 
-          + "\nTRP: "  +str(desempeno_algoritmo(lista, tipo).Tiempo_de_respuesta_promedio ))
+
+
+
+    print(     "\nIdle : "+  str(datos_alg.idle  )  
+          +"\nTER: "+   str(datos_alg.Tiempo_de_espera_promedio  ) 
+          + "\nTRP: "  +str(datos_alg.Tiempo_de_respuesta_promedio ))

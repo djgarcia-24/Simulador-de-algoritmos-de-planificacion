@@ -25,7 +25,7 @@ def seleccion_algoritmo_planificacion(lista):
                 return algoritmo_sjf(lista)                
             case "3":
                 return algoritmo_prioridad(lista)
-                break
+                
             case "4":
                 quantum = input("Ingresa el valor del Quantum para Round Robin: ")
                 if quantum.isdigit():
